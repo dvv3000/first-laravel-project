@@ -17,7 +17,7 @@ class CreatStudentsTable extends Migration
             $table->id();
             $table->string('first_name', $length=50);
             $table->string('last_name', $length=50);
-            $table->date('birthday')->nullable(); // có thể null
+            $table->date('birthdate')->nullable(); // có thể null
             $table->boolean('gender');
         });
     }
@@ -29,6 +29,6 @@ class CreatStudentsTable extends Migration
      */
     public function down()
     {
-        //
+        Schema::dropIfExists('students');
     }
 }

@@ -23,13 +23,33 @@ class StudentController extends Controller
 
     public function store(Request $request)
     {
-        $student = new Student();
-        $student->first_name = $request->get('firstName');
-        $student->last_name = $request->get('lastName');
-        $student->birthday = $request->get('birthday');
-        $student->gender = $request->get('gender');
 
-        $student->save();
+        // dd($request->except('_token'));
+        // $student = new Student();
+        // $student->fill($request->except('_token'));
+        // $student->save();
+        Student::create($request->except('_token'));
+
+        return redirect()->route('student.index');
+    }
+
+    public function destroy(Student $student)
+    {
+        // dd($student);
+        $student->delete();
+
+        return redirect()->route('student.index');
+    }
+
+    public function edit(Student $student)
+    {
+        return view('student.edit', [
+            'student' => $student,
+        ]);
+    }
+
+    public function update(Request $request, Student $student) {
+        $student->update($request->except('_token', '_method'));
 
         return redirect()->route('student.index');
     }

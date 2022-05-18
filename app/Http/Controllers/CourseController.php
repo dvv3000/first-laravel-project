@@ -6,19 +6,32 @@ use App\Models\Course;
 use App\Http\Requests\Course\StoreRequest;
 use App\Http\Requests\Course\UpdateRequest;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\View;
+
 class CourseController extends Controller
 {
+    private $model;
+
     /**
      * Display a listing of the resource.
      *
      * 
      */
+    public function __construct()
+    {   
+        $this->model = new Course();
+        
+        $routeName = Route::currentRouteName();
+        View::share('routeName', $routeName);
+    }
+
     public function index(Request $request)
     {   
         $search = $request->get('q');
         $courses = Course::query()
         ->where('name', 'like', '%' . $search . '%')
-        ->paginate(3);
+        ->paginate(5);
 
         $courses->appends([
             'q' => $search,

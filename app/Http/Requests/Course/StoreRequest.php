@@ -25,7 +25,7 @@ class StoreRequest extends FormRequest
     {
         return [
             'name' => [
-                'bail',
+                'bail', //khi gặp lỗi thì dừng lại và báo lỗi luôn chứ không validate toàn bộ các rules
                 'required',
                 'string',
                 'unique:App\Models\Course',
@@ -36,7 +36,7 @@ class StoreRequest extends FormRequest
     public function messages() {
         return [
             'name.required/name.string' =>  ':attribute must be a string',
-            'name.unique' => ':attribute must is existed'
+            'name.unique' => ':attribute is existed'
         ];
     }
 
